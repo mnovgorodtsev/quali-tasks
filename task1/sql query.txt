@@ -1,0 +1,13 @@
+SELECT DISTINCT 
+	c.part_number AS Part_Number,
+	c.manufacturer AS Manufacturer,
+	c.price AS First_Price,
+	f.price AS Second_Price,
+	CASE 
+		WHEN c.price < f.price THEN 'First List'
+		WHEN c.price > f.price THEN 'Second List'
+		ELSE 'Equal'
+	END AS Price_Winner
+FROM CSV_Comparison c
+JOIN CSV_Final f ON c.part_number = f."part number" AND c.manufacturer = f.manufacturer
+WHERE f.quantity > 0
